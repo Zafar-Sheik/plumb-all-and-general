@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+@theme {
+  --color-steel-950: #07090c;
+  --color-steel-900: #0c1015;
+  --color-steel-850: #11161d;
+  --color-steel-800: #171e27;
+  --color-steel-700: #232c38;
+  --color-steel-500: #5b6878;
+  --color-steel-300: #a9b4c2;
+  --color-steel-100: #e6ebf1;
+  --color-flame: #ff6a1a;
+  --color-flame-soft: #ff9354;
+  --color-aqua: #23d5ff;
+  --color-aqua-deep: #0b7ea3;
+
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --animate-marquee: marquee var(--marquee-duration, 40s) linear infinite;
+  --animate-spotlight: spotlight 2s ease 0.75s 1 forwards;
+  --animate-flow: flow 2.4s linear infinite;
+  --animate-pulse-ring: pulse-ring 2.2s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
+
+  @keyframes marquee {
+    to {
+      transform: translateX(calc(-50% - 0.75rem));
+    }
+  }
+  @keyframes spotlight {
+    0% {
+      opacity: 0;
+      transform: translate(-72%, -62%) scale(0.5);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(-50%, -40%) scale(1);
+    }
+  }
+  @keyframes flow {
+    to {
+      stroke-dashoffset: -48;
+    }
+  }
+  @keyframes pulse-ring {
+    0% {
+      transform: scale(0.6);
+      opacity: 0.9;
+    }
+    100% {
+      transform: scale(2.4);
+      opacity: 0;
+    }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--color-steel-950);
+}
+
+body {
+  background: var(--color-steel-950);
+  color: var(--color-steel-100);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-flame);
+  color: var(--color-steel-950);
+}
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.03em;
+}
+
+.text-gradient-flame {
+  background: linear-gradient(100deg, #ffd2b3 0%, var(--color-flame) 45%, #ff3d00 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-aqua {
+  background: linear-gradient(100deg, #c9f5ff 0%, var(--color-aqua) 50%, var(--color-aqua-deep) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+
+.bg-dots {
+  background-image: radial-gradient(rgb(255 255 255 / 0.12) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.hazard-stripe {
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--color-flame) 0 14px,
+    var(--color-steel-950) 14px 28px
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@keyframes scroll-cue {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(200%);
+  }
+}
+
+/* SplitText wraps words in their own boxes, so gradient text must be re-applied to them. */
+.text-gradient-flame * {
+  background: inherit;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Give SplitText line masks room for descenders. */
+.hero-title > div,
+.services-title > div {
+  padding-bottom: 0.12em;
+  margin-bottom: -0.12em;
+}
